@@ -1,0 +1,17 @@
+#!/bin/bash
+ip=192.168.1.10
+ping -c 1 $ip &>/dev/null            #三个ping有一个能通，说明服务器正常
+     a=$?
+     sleep 2
+     ping -c 1 $ip &>/dev/null
+     b=$?
+     sleep 2
+     ping -c 1 $ip &>/dev/null
+     c=$?
+     sleep 2
+     DATE=$(date +%F" "%H:%M)
+     if [ $a -ne 0 -a $b -ne 0 -a $c -ne 0 ];then
+         echo -e "Date : $DATE\nHost : $ip\nProblem : Ping is failed." | curl "https://push.2049.eu.org/?sendkey=88888888&text=off"
+     #else
+     #    echo "$ip ping is successful."
+     fi
